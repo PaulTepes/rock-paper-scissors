@@ -19,16 +19,18 @@ function getComputerChoice() {
 
 //player select his choice via prompt with case-insensitive
 function getPlayerSelection() {
-  let playerChoice;
-  do {
-    playerChoice = prompt(`Choose weapon`, "rock, paper, scissors")
-      .toLowerCase()
-      .trim();
-  } while (
+  let playerChoice = "";
+  while (
     playerChoice !== "rock" &&
     playerChoice !== "paper" &&
     playerChoice !== "scissors"
-  );
+  ) {
+    playerChoice = prompt(`Choose weapon`, "rock, paper, scissors");
+    if (playerChoice === null) {
+      return null;
+    }
+    playerChoice = playerChoice.toLowerCase().trim();
+  }
   return playerChoice;
 }
 
@@ -61,6 +63,9 @@ function playGame() {
   let whoWin = "Draw";
   for (let i = 0; i < 5; i++) {
     const playerSelection = getPlayerSelection();
+    if (playerSelection === null) {
+      return "You canceled the game.";
+    }
     const computerSelection = getComputerChoice();
     const result = playRound(playerSelection, computerSelection);
     console.log(result);
@@ -71,6 +76,12 @@ function playGame() {
       winCounter--;
     }
     // console.log(winCounter) win counter checker;
+    /*test 
+    mojno dobavit vna4ale tekst 'Hello i wanna play game with you or safe me'
+    tipo moniki, raspisat tipo viberi dar ili echo 4to to takoe, mojet molot tora,
+    kopie axilesa, ili 4tobi spasti menya nujno viigrat 20 raz podryad, mojno sdelat mod
+    izi eto bo5 i hard eto bo10. i esli ti viiagraesh 10 raz podryad to vkonce tebe dadut titul
+*/
   }
   if (winCounter > 0) {
     whoWin = "Congratulations!!! You win bo5.";
