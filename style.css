@@ -1,0 +1,23 @@
+#main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+#score-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#result-frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  display: flex;
+  justify-content: space-around;
+}

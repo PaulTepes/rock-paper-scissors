@@ -1,4 +1,10 @@
-// computer generate random choice
+let resultFrame = document.querySelector("#result-frame");
+let bo5List = document.createElement("ul");
+resultFrame.appendChild(bo5List);
+let whoWinScore = document.createElement("p");
+
+let playerScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
@@ -15,23 +21,6 @@ function getComputerChoice() {
       break;
   }
   return computerChoice;
-}
-
-//player select his choice via prompt with case-insensitive
-function getPlayerSelection() {
-  let playerChoice = "";
-  while (
-    playerChoice !== "rock" &&
-    playerChoice !== "paper" &&
-    playerChoice !== "scissors"
-  ) {
-    playerChoice = prompt(`Choose weapon`, "rock, paper, scissors");
-    if (playerChoice === null) {
-      return null;
-    }
-    playerChoice = playerChoice.toLowerCase().trim();
-  }
-  return playerChoice;
 }
 
 // we take player choice and computer choice and compare it. then return the winner
@@ -53,44 +42,96 @@ function playRound(playerSelection, computerSelection) {
   } else {
     result = `Draw! ${playerSelection} equal ${computerSelection}`;
   }
+
+  addGameLog(result);
+
   return result;
 }
 
-// play 5 times in a row and check who win bo5
+function addGameLog(result) {
+  let gameLog = document.createElement("li");
+  gameLog.textContent = result;
 
-function playGame() {
-  let winCounter = 0;
-  let whoWin = "Draw";
-  for (let i = 0; i < 5; i++) {
-    const playerSelection = getPlayerSelection();
-    if (playerSelection === null) {
-      return "You canceled the game.";
-    }
-    const computerSelection = getComputerChoice();
-    const result = playRound(playerSelection, computerSelection);
-    console.log(result);
-
-    if (result.includes("Win")) {
-      winCounter++;
-    } else if (result.includes("Lose")) {
-      winCounter--;
-    }
-    // console.log(winCounter) win counter checker;
-    /*test 
-    mojno dobavit vna4ale tekst 'Hello i wanna play game with you or safe me'
-    tipo moniki, raspisat tipo viberi dar ili echo 4to to takoe, mojet molot tora,
-    kopie axilesa, ili 4tobi spasti menya nujno viigrat 20 raz podryad, mojno sdelat mod
-    izi eto bo5 i hard eto bo10. i esli ti viiagraesh 10 raz podryad to vkonce tebe dadut titul
-*/
-  }
-  if (winCounter > 0) {
-    whoWin = "Congratulations!!! You win bo5.";
-  } else if (winCounter < 0) {
-    whoWin = "You lose bo5!!!";
+  if (result.includes("Win")) {
+    playerScore++;
+  } else if (result.includes("Lose")) {
+    computerScore++;
   } else {
-    whoWin = "Draw bo5!!!";
+    playerScore++;
+    computerScore++;
   }
-  return whoWin;
+  if (playerScore === 5 || computerScore === 5) {
+    if (playerScore === 5) {
+      whoWin = "Congratulations!!! You win.";
+    } else if (computerScore === 5) {
+      whoWin = "You lose bo5!!!";
+    } else {
+      whoWin = "Draw bo5!!!";
+    }
+
+    whoWinScore.textContent = whoWin;
+    resultFrame.appendChild(whoWinScore);
+    buttonDisabler();
+    gameReset();
+  }
+  bo5List.appendChild(gameLog);
+  scoreContainer.appendChild(playerCounter);
+  scoreContainer.appendChild(computerCounter);
+  playerCounter.textContent = playerScore;
+  computerCounter.textContent = computerScore;
 }
 
-console.log(playGame());
+function buttonDisabler() {
+  document
+    .querySelectorAll(".selection")
+    .forEach((button) => (button.disabled = true));
+}
+function buttonEnabler() {
+  document
+    .querySelectorAll(".selection")
+    .forEach((button) => (button.disabled = false));
+}
+
+function gameReset() {
+  resultFrame.appendChild(restartButton);
+  restartButton.textContent = "Restart the game";
+  restartButton.addEventListener("click", clearTable);
+}
+
+function clearTable() {
+  resultFrame.removeChild(bo5List);
+  resultFrame.removeChild(whoWinScore);
+  resultFrame.removeChild(restartButton);
+  buttonEnabler();
+  bo5List = document.createElement("ul");
+  resultFrame.appendChild(bo5List);
+  whoWinScore = document.createElement("p");
+  scoreContainer.removeChild(playerCounter);
+  scoreContainer.removeChild(computerCounter);
+  playerScore = 0;
+  computerScore = 0;
+}
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+rockButton.addEventListener("click", () =>
+  playRound("rock", getComputerChoice())
+);
+
+paperButton.addEventListener("click", () =>
+  playRound("paper", getComputerChoice())
+);
+
+scissorsButton.addEventListener("click", () =>
+  playRound("scissors", getComputerChoice())
+);
+
+// score checkout
+let playerCounter = document.createElement("p");
+
+let computerCounter = document.createElement("p");
+
+let scoreContainer = document.querySelector("#score-container");
+
+let restartButton = document.createElement("button");
