@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+* {
+  font-family: "VT323", "Pixelify Sans", sans-serif;
+  font-size: 36px;
+}
+
 #main-container {
   display: flex;
   flex-direction: column;
@@ -19,5 +27,45 @@
 
 #container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 24px;
+  text-align: center;
+  padding: 0;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 24px;
+  width: 240px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #ffcc00;
+  border: 2px solid #000000;
+  color: #000000;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+button[disabled] {
+  background-color: #999999;
+  color: #666666;
+  cursor: not-allowed;
 }

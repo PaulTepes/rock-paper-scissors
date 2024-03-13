@@ -56,15 +56,13 @@ function addGameLog(result) {
     playerScore++;
   } else if (result.includes("Lose")) {
     computerScore++;
-  } else {
-    playerScore++;
-    computerScore++;
   }
+
   if (playerScore === 5 || computerScore === 5) {
     if (playerScore === 5) {
       whoWin = "Congratulations!!! You win.";
     } else if (computerScore === 5) {
-      whoWin = "You lose bo5!!!";
+      whoWin = "Game Over";
     } else {
       whoWin = "Draw bo5!!!";
     }
@@ -77,8 +75,8 @@ function addGameLog(result) {
   bo5List.appendChild(gameLog);
   scoreContainer.appendChild(playerCounter);
   scoreContainer.appendChild(computerCounter);
-  playerCounter.textContent = playerScore;
-  computerCounter.textContent = computerScore;
+  playerCounter.textContent = `Your score: ${playerScore}`;
+  computerCounter.textContent = `Computer score: ${computerScore}`;
 }
 
 function buttonDisabler() {
@@ -86,6 +84,7 @@ function buttonDisabler() {
     .querySelectorAll(".selection")
     .forEach((button) => (button.disabled = true));
 }
+
 function buttonEnabler() {
   document
     .querySelectorAll(".selection")
@@ -96,6 +95,8 @@ function gameReset() {
   resultFrame.appendChild(restartButton);
   restartButton.textContent = "Restart the game";
   restartButton.addEventListener("click", clearTable);
+  restartButton.scrollIntoView();
+  window.scrollTo(0, document.body.scrollHeight);
 }
 
 function clearTable() {
@@ -127,7 +128,6 @@ scissorsButton.addEventListener("click", () =>
   playRound("scissors", getComputerChoice())
 );
 
-// score checkout
 let playerCounter = document.createElement("p");
 
 let computerCounter = document.createElement("p");
